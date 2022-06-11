@@ -1,8 +1,8 @@
 {
-  "name": "playground",
-  "productName": "Playground",
+  "name": "BetterSqlite3MultipleCiphersElectron",
+  "productName": "BetterSqlite3MultipleCiphersElectron",
   "version": "1.0.0",
-  "description": "Playground",
+  "description": "Testing playground for better-sqlite3-multiple-ciphers-electron",
   "main": ".webpack/main",
   "scripts": {
     "start": "electron-forge start",
@@ -17,7 +17,7 @@
   "config": {
     "forge": {
       "packagerConfig": {
-        "executableName": "playground"
+        "executableName": "BetterSqlite3MultipleCiphersElectron"
       },
       "makers": [
         {
