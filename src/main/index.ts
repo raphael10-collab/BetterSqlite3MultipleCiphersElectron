@@ -92,9 +92,14 @@ const secret_key = "my-secret-key";
 infopiecesDb.pragma(`key='${secret_key}'`);
 initializeInfopiecesDB(infopiecesDb);
 
+const insertIP = `
+  INSERT INTO infopiecesDb (id, infotext)
+  VALUES (ip.id, ip.infotext)`
+
+
 ipcMain.handle("insert-infopiece-intodb", (event, args) => {
   console.log("ipcMain.on-insert-infopiece-intodb-args: ", args)
-  insertInfopiece(args)
+  infopiecesDb.prepare(insertIP).run(args)
 })
 
 
