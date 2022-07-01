@@ -21,11 +21,22 @@ export default function App() {
     }
   }, [])
 
+  let ip_01: IInfopiece = {
+    id: 0,
+    infotext: "Today has been raining. It's June ...." ,
+  }
+
+  const sendMsgToDbFunct = () => {
+    window.api.send("insert-infopiece-intodb", ip_01)
+  }
+
   return (
     <div className='container'>
       <h1 className='heading'>
           Hello World!
       </h1>
+
+      <button onClick={() => sendMsgToDbFunct()}>SendToDb</button>
 
     </div>
   );

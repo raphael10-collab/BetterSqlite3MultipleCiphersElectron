@@ -4,7 +4,7 @@ import * as path from 'path'
 
 import { app } from 'electron'
 
-export const getInfopiecesDbpath = () {
+export const getInfopiecesDbpath = () => {
   const isEnvDevelopment = process.env.NODE_ENV === 'development'
 
   const infopiecesDbpath = isEnvDevelopment
@@ -13,14 +13,10 @@ export const getInfopiecesDbpath = () {
   return infopiecesDbpath
 }
 
+const createInfopiecesTable: any = "CREATE TABLE IF NOT EXISTS infopieces (id INTEGER PRIMARY KEY AUTOINCREMENT, infotext TEXT NOT NULL);"
 
-const createInfopiecesTable: any = `
-  CREATE TABLE IF NOT EXISTS infopieces (
-    id INTEGER PRIMARY KEY AUTOINCREMENT,
-    infotext TEXT NOT NULL,
-  );`
 
-const createInfopiecesIndex = `PRAGMA INDEX_LIST(infopieces);`
+const createInfopiecesIndex = "PRAGMA INDEX_LIST(infopieces);"
  
 export function initializeInfopiecesDB(db: Database) {
   db.prepare(createInfopiecesTable).run()

@@ -13,9 +13,6 @@ import {
 import * as path from 'path'
 import * as fs from 'fs'
 
-import { insertInfopiece } from '../common/infopiecesDb/sync'
-
-
 declare const MAIN_WINDOW_WEBPACK_ENTRY: string;
 declare const MAIN_WINDOW_PRELOAD_WEBPACK_ENTRY: string;
 
@@ -75,44 +72,30 @@ app.on('activate', () => {
 // Set custom userData-app folder:
 //app.setPath('userData', path.join(app.getPath("home"), '/playground'));
 //console.log("app.getPath('userData'): ", app.getPath('userData'));
-
-import { getInfopiecesDbpath } from '../common/infopiecesDb/initializeInfopiecesDb'
-import { encryptNewDB } from '../common/infopiecesDb/sync'
-
-let infopiecesDbpath = getInfopiecesDbpath()
-
-//let Database = require('better-sqlite3-multiple-ciphers')(infopiecesDbpath, { verbose: console.log })
+//import { encryptNewDB } from '../common/infopiecesDb/sync'
 
 // https://github.com/WiseLibs/better-sqlite3/blob/master/docs/api.md#new-databasepath-options
-
 // https://github.com/m4heshd/better-sqlite3-multiple-ciphers/issues/23#issuecomment-1152634207
 
-let Database = require('better-sqlite3-multiple-ciphers')
-const infopiecesDb = new Database(infopiecesDbpath, { verbose: console.log })
 
-const secret_key = "my-secret-key"
 
-//infopiecesDb.pragma("key='secret-key'")
-infopiecesDb.pragma(`key='${secret_key}'`)
-
-infopiecesDb.close()
-
-encryptNewDB(infopiecesDb, secret_key)
-
-//infopiecesDb.pragma("rekey='secret_key'")
-//infopiecesDb.prepare('VACUUM').run()
+import { getInfopiecesDbpath } from '../common/infopiecesDb/initializeInfopiecesDb'
+let infopiecesDbpath = getInfopiecesDbpath()
 
 import { initializeInfopiecesDB } from '../common/infopiecesDb/initializeInfopiecesDb'
-initializeInfopiecesDB(infopiecesDb)
+import { insertInfopiece } from '../common/infopiecesDb/sync'
 
-// https://github.com/m4heshd/better-sqlite3-multiple-ciphers#encryption
-//const row = infopiecesDb.prepare("SELECT * FROM infopieces WHERE id = ?");
+const Database = require('better-sqlite3-multiple-ciphers');
+const infopiecesDb = new Database(infopiecesDbpath, {verbose: console.log});
+const secret_key = "my-secret-key";
+
+infopiecesDb.pragma(`key='${secret_key}'`);
+initializeInfopiecesDB(infopiecesDb);
+
+ipcMain.handle("insert-infopiece-intodb", (event, args) => {
+  console.log("ipcMain.on-insert-infopiece-intodb-args: ", args)
+  insertInfopiece(args)
+})
 
 
-// https://github.com/Saul-Mirone/homura/blob/c9e98eb0b3c9701b2e80bbaebb9ab0d66a7d1d25/src/model/initialize.ts
-// https://github.com/WiseLibs/better-sqlite3/blob/master/docs/api.md#preparestring---statement
-
-// In this file you can include the rest of your app's specific main process
-// code. You can also put them in separate files and import them here.
-
-
+infopiecesDb.close();

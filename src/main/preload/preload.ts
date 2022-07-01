@@ -86,6 +86,7 @@ contextBridge.exposeInMainWorld(
       },
       // https://github.com/frederiksen/angular-electron-boilerplate/blob/master/src/preload/preload.ts
       electronIpcSend: (channel: string, ...arg: any) => {
+        //console.log("preload.ts-electronIpcSend-args[0]: ", arg[0])
         ipcRenderer.send(channel, arg);
       },
 
