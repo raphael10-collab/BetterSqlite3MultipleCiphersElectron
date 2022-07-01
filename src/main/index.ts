@@ -86,7 +86,7 @@ import { initializeInfopiecesDB } from '../common/infopiecesDb/initializeInfopie
 import { insertInfopiece } from '../common/infopiecesDb/sync'
 
 const Database = require('better-sqlite3-multiple-ciphers');
-const infopiecesDb = new Database(infopiecesDbpath, {verbose: console.log});
+const infopiecesDb = new Database(infopiecesDbpath, {fileMustExist: true; verbose: console.log});
 const secret_key = "my-secret-key";
 
 infopiecesDb.pragma(`key='${secret_key}'`);
