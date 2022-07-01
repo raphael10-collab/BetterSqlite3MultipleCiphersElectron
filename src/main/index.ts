@@ -81,6 +81,7 @@ app.on('activate', () => {
 
 import { getInfopiecesDbpath } from '../common/infopiecesDb/initializeInfopiecesDb'
 let infopiecesDbpath = getInfopiecesDbpath()
+console.log("let infopiecesDbpath = getInfopiecesDbpath(): ", infopiecesDbpath)
 
 import { initializeInfopiecesDB } from '../common/infopiecesDb/initializeInfopiecesDb'
 import { insertInfopiece } from '../common/infopiecesDb/sync'
